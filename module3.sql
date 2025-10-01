@@ -57,6 +57,35 @@ SELECT * FROM NotNullTest
 DELETE FROM NotNullTest
 WHERE Name IS NULL
 
+--chnge the table name
+sp_rename 'old_table','new_table'
+
+--change the column name
+sp_rename 'table_name.column_name','new_column_Name','COLUMN'
+
+--modify column dataTyppe and Constraints
+ALTER TABLE TABLE_NAME
+ALTER COLUMN COLUMN_NAME NEW_DATA_TYPE [null | not null]
+
+
+--modify constraints (except null and not null)
+     --firsrt drop constraints then add constraints
+	ALTER TABLE table_name
+	DROP constraint Constraint_name--(any name you can give)
+    --add constraints
+	ALTER  TABLE table_name
+	ADD CONSTRAINT constraint_name constraint_defination for column_name;
+
+  --example
+     ALTER TABLE Unique_Table(table_name)
+     DROP CONSTRAINT df_unique_salary--(any name you can give);
+  
+     ALTER TABLE Unique_Table
+     ADD CONSTRAINT df_unique_salary DEFAULT 1000 FOR salary;
+
+
+
+
 -- Replacement of Alt+F1
 sp_help Employee
 
