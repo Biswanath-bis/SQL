@@ -1,0 +1,138 @@
+--1.Insert a new record in your Orders table.
+--2.Add Primary key constraint for SalesmanId column in Salesman table. Add default
+     --constraint for City column in Salesman table. Add Foreign key constraint for SalesmanId
+        --column in Customer table. Add not null constraint in Customer_name column for the
+            --Customer table.
+--3.Fetch the data where the Customer’s name is ending with ‘N’ also get the purchase
+   --amount value greater than 500.
+--4.Using SET operators, retrieve the first result with unique SalesmanId values from two
+  --tables, and the other result containing SalesmanId with duplicates from two tables.
+--5.Display the below columns which has the matching data.
+     --Orderdate, Salesman Name, Customer Name, Commission, and City which has the
+         --range of Purchase Amount between 500 to 1500.
+--6-Using right join fetch all the results from Salesman and Orders table.
+
+
+
+
+
+CREATE TABLE Salesman(
+   SalesmanId INT PRIMARY KEY,
+   SalesmanName VARCHAR(100),
+   Commision INT,
+   City VARCHAR(100) DEFAULT 'unknown' ,
+   Age INT
+   );
+
+   INSERT INTO Salesman(SalesmanId,SalesmanName,Commision,City,Age)
+   VALUES
+       (101,'Joe',50,'California',17),
+       (102,'Simon',75,'Texas',25),
+       (103,'Jessie',105,'Florida',35),
+       (104,'Danny',100,'Texas',22),
+       (105,'Lia',65,'New Jersy',30);
+
+       SELECT * FROM Salesman
+
+   CREATE TABLE Customer(
+    CustomerId INT PRIMARY KEY,
+    CustomerName VARCHAR(100) NOT NULL,
+    PurchaseAmount DECIMAL(10,2),
+    SalesmanId INT,
+    FOREIGN KEY (SalesmanId) REFERENCES Salesman(SalesmanId)
+   );
+  
+
+    INSERT INTO Customer(CustomerId,CustomerName,PurchaseAmount,SalesmanId)
+
+   VALUES
+    (2345,'Andrew',550,101),
+    (1575,'Lucky',4500,102),
+    (2346,'Andrew',4000,103),
+    (2347,'Remona',2700,104),
+    (2348,'Julia',4545,105);
+
+
+    SELECT * FROM Customer
+    
+    INSERT INTO Customer(CustomerId,CustomerName,PurchaseAmount,SalesmanId)
+
+   VALUES
+   (2349,'Thor',4545,105);
+    
+
+    CREATE TABLE Orders (
+    OrderId INT PRIMARY KEY,
+    CustomerId INT,
+    SalesmanId INT,
+    OrderDate DATE,
+    Amount DECIMAL(10,2),
+    FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId),
+    FOREIGN KEY (SalesmanId) REFERENCES Salesman(SalesmanId)
+);
+
+INSERT INTO  Orders(OrderId,CustomerId, SalesmanId,OrderDate,Amount)
+
+VALUES
+(5001,2345,101,'2021-07-04',500),
+(5002,2346,104,'2022-02-15',1500);
+
+SELECT * FROM Orders
+
+--Insert a new record in your Orders table.
+INSERT INTO  Orders(OrderId,CustomerId, SalesmanId,OrderDate,Amount)
+
+VALUES
+(5003,2347,102,'2023-07-04',5100);
+
+/*Fetch the data where the Customer’s name is ending with ‘N’ also get the purchase
+amount value greater than 500.*/
+
+SELECT * FROM Customer
+Where CustomerName LIKE '%w'
+AND PurchaseAmount >500;
+
+/*
+Using SET operators, retrieve the first result with unique SalesmanId values from two
+tables, and the other result containing SalesmanId with duplicates from two tables.*/
+
+--SET OPERATOR--->UNION AND UNION ALL
+
+SELECT SalesmanId FROM Salesman
+UNION ALL
+SELECT SalesmanId FROM Customer;
+
+SELECT SalesmanId FROM Salesman
+UNION 
+SELECT SalesmanId FROM Customer;
+
+/*
+Display the below columns which has the matching data.
+Orderdate, Salesman Name, Customer Name, Commission, and City which has the
+range of Purchase Amount between 500 to 1500.*/
+
+SELECT 
+    O.OrderDate,
+    S.SalesmanName,
+    C.CustomerName,
+    S.Commision,
+    S.City,
+    C.PurchaseAmount
+    
+FROM 
+Orders O 
+JOIN Customer C ON O.CustomerId = C.CustomerId
+JOIN Salesman S ON O.SalesmanId = S.SalesmanId
+WHERE C.PurchaseAmount BETWEEN 500 AND 1500;
+
+select * from Salesman
+select * from Orders
+select * from Customer
+
+--Using right join fetch all the results from Salesman and Orders table.
+
+SELECT *
+FROM Orders O
+RIGHT JOIN Salesman S ON O.SalesmanId = S.SalesmanId;
+
+         
