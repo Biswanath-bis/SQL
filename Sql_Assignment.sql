@@ -135,4 +135,66 @@ SELECT *
 FROM Orders O
 RIGHT JOIN Salesman S ON O.SalesmanId = S.SalesmanId;
 
-         
+   --ASSIGNMENT 2
+
+--Tasks To Be Performed:
+--1.Create a customer table which comprises of these columns:
+--‘customer_id’, ‘first_name’, ‘last_name’, ‘email’, ‘address’,
+--‘city’,’state’,’zip’
+--2.Insert 5 new records into the table
+--3.Select only the ‘first_name’ and ‘last_name’ columns from
+--the customer table
+--4.Select those records where ‘first_name’ starts with “B”
+--and city is ‘San Jose’.
+--5.Select those records where Email has only ‘gmail’.
+--6.Select those records where the ‘last_name’ doesn't end with
+--“K”.
+
+
+CREATE TABLE Custome_2(
+customer_id INT PRIMARY KEY,
+first_name VARCHAR(100) NOT NULL,
+last_name VARCHAR(100),
+email VARCHAR(100) NOT NULL,
+address VARCHAR(100) DEFAULT 'UNKNOWN',
+city VARCHAR(100),
+state VARCHAR(100),
+zip INT
+);
+
+INSERT INTO Custome_2(customer_id,first_name,last_name,email,address,city,state,zip)
+VALUES(1,'Biswanath','Bhuyan','biswa@gmail.com','India','Kendrapara','Odisha',754210),
+      (2,'Bishnu','Prasad','bishnu@gmail.com','India','Bhubaneswae','Odisha',754211),
+      (3,'Chikun','Sahoo','chikun@gmail.com','India','Patna','Bihar',754212),
+      (4,'Happy','Nayak','happy@gmail.com','India','Kendrapara','Odisha',754210),
+      (5,'JB','Nayak','jaga@gmail.com','India','Bhubaneswar','Odisha',754210);
+
+      SELECT * FROM Custome_2
+
+--3.Select only the ‘first_name’ and ‘last_name’ columns from
+--the customer table
+SELECT first_name,last_name
+FROM Custome_2
+
+--4.Select those records where ‘first_name’ starts with “B”
+
+SELECT * -- first_name
+FROM Custome_2
+WHERE first_name LIKE 'b%'
+
+--4.Select those records where ‘last_name’ ENDS with “K”
+ 
+ SELECT last_name
+ FROM Custome_2
+ WHERE last_name LIKE '%k'
+
+ --5.Select those records where Email has only ‘gmail’.
+SELECT email
+FROM Custome_2
+WHERE email LIKE '%gmail.com'
+
+--6.Select those records where the ‘last_name’ doesn't end with
+--“K”.
+SELECT * 
+FROM Custome_2
+WHERE last_name NOT LIKE '%k'      
