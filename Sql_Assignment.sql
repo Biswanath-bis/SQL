@@ -198,3 +198,81 @@ WHERE email LIKE '%gmail.com'
 SELECT * 
 FROM Custome_2
 WHERE last_name NOT LIKE '%k'      
+
+
+--ASSIGNMENT-3
+--Tasks To Be Performed:
+--1.Create an ‘Orders’ table which comprises of these columns:
+--‘order_id’, ‘order_date’, ‘amount’, ‘customer_id’.
+--2.Insert 5 new records.
+--3.Make an inner join on ‘Customer’ and ‘Orders’ tables on the
+--‘customer_id’ column.
+--4.Make left and right joins on ‘Customer’ and ‘Orders’
+--tables on the ‘customer_id’ column.
+--5.Make a full outer join on ‘Customer’ and ‘Orders’ table on the
+--‘customer_id’ column.
+--6.Update the ‘Orders’table and set the amount to
+--be 100 where ‘customer_id’ is 3.
+
+
+
+--1.Create an ‘Orders’ table which comprises of these columns:
+--‘order_id’, ‘order_date’, ‘amount’, ‘customer_id’.
+
+CREATE TABLE Orders_2(
+order_id INT PRIMARY KEY,
+order_date VARCHAR(100),
+amount INT NOT NULL, 
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES Custome_2(customer_id)
+);
+
+--2.Insert 5 new records.
+
+   INSERT INTO Orders_2(order_id,order_date,amount,customer_id)
+   VALUES
+    (1101,'2021-07-01',550,2),
+    (1202,'2021-09-23',4500,1),
+    (1303,'2022-03-15',4000,2),
+    (2024,'2023-06-06',2700,3),
+    (2025,'2025-11-09',4545,5);
+
+    SELECT * FROM Orders_2
+
+ --3.Make an inner join on ‘Customer’ and ‘Orders’ tables on the
+--‘customer_id’ column.
+
+SELECT C.* ,O.customer_id
+FROM Custome_2 AS C 
+INNER JOIN Orders_2 AS O
+ON C.customer_id=O.customer_id
+
+--4.Make left and right joins on ‘Customer’ and ‘Orders’
+--tables on the ‘customer_id’ column.
+SELECT * FROM Custome_2
+SELECT * FROM Orders_2
+
+SELECT C.*,O.customer_id
+FROM Custome_2 AS C
+LEFT JOIN Orders_2 AS O
+ON C.customer_id=O.customer_id
+
+SELECT C.*,O.customer_id
+FROM Custome_2 AS C
+RIGHT JOIN Orders_2 AS O
+ON C.customer_id=O.customer_id
+
+--5.Make a full outer join on ‘Customer’ and ‘Orders’ table on the
+--‘customer_id’ column.
+
+SELECT C.*,O.customer_id
+FROM Custome_2 AS C
+FULL JOIN Orders_2 AS O
+ON C.customer_id=O.customer_id
+
+--6.Update the ‘Orders’table and set the amount to
+--be 100 where ‘customer_id’ is 3.
+
+UPDATE Orders_2
+SET amount=100
+WHERE customer_id=3
