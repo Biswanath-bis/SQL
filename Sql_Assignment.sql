@@ -276,3 +276,83 @@ ON C.customer_id=O.customer_id
 UPDATE Orders_2
 SET amount=100
 WHERE customer_id=3
+
+
+--ASSIGNMENT-4
+--Tasks To Be Performed:
+--1.Use the inbuilt functions and find the minimum, maximum
+--and average amount from the orders table
+--2.Create a user-defined function which will multiply the given
+--number with 10
+--3.Use the case statement to check if 100 is less than 200,
+--greater than 200 or equal to 200 and print the
+--corresponding value.
+--4.Using a case statement, find the status of the amount. Set
+--the status of the amount as high amount, low amount or
+--medium amount based upon the condition.
+--5.Create a user-defined function, to fetch the amount greater
+--than then given input.
+
+--1.Use the inbuilt functions and find the minimum, maximum
+SELECT min(amount) as Mininum_amount FROM Orders_2
+SELECT max(amount) as Max_amount FROM Orders_2
+SELECT AVG(amount) as Avg_amount FROM Orders_2
+
+--2.Create a user-defined function which will multiply the given
+--number with 10
+
+CREATE OR ALTER FUNCTION fn_multiply
+(
+    @number1 INT
+)
+RETURNS INT
+AS
+BEGIN
+    RETURN (@number1 * 10)
+END;
+
+
+-- Now test the function
+SELECT dbo.fn_multiply(5) as mutiply;
+
+--3.Use the case statement to check if 100 is less than 200,
+--greater than 200 or equal to 200 and print the
+--corresponding value.
+
+SELECT 
+    CASE 
+        WHEN 100 < 200 THEN '100 is less than 200'
+        WHEN 100 > 200 THEN '100 is greater than 200'
+        ELSE '100 is equal to 200'
+    END AS Result;
+
+    --4.Using a case statement, find the status of the amount. Set
+    --the status of the amount as high amount, low amount or
+    --medium amount based upon the condition.
+
+SELECT  amount,
+  CASE
+  WHEN amount >= 3000 THEN 'High amount'
+  WHEN amount BETWEEN  2000 AND 3000 THEN 'medium amount'
+  ELSE 'low amount'
+  END AS Check_amount
+  FROM Orders_2
+
+
+  --5.Create a user-defined function, to fetch the amount greater
+--than then given input.
+CREATE OR ALTER FUNCTION fn_fetch
+(
+@number INT
+)
+RETURNS Table
+AS
+
+RETURN
+(
+SELECT *
+FROM Orders_2
+WHERE amount > @number
+)
+
+SELECT * FROM dbo.fn_fetch(3000);
